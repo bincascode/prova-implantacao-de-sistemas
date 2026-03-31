@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquivo dos Pacientes</title>
+    
+    <meta name="author" content="Bianca da Silva Ferreira">
+    
+    
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão de Pacientes</title>
+    <style>
+        /* CSS INTEGRADO PARA FACILITAR */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0f4f8;
+            padding-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dcdde1;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #3498db;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #219150;
+        }
+
+        /* ESTILO DA TABELA */
+        .lista-secao {
+            margin-top: 40px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        table th {
+            background-color: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .hidden { display: none; }
+        
+        #mensagem {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🩺 Cadastro de Pacientes</h1>
+            <p>Painel de Implantação de Sistemas</p>
+        </header>
+
+        <div id="mensagem" class="hidden"></div>
+
+        <form id="formCadastro">
+            <div class="form-grid">
+                <div class="input-group full-width">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" placeholder="Digite o nome do paciente" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="celular">Celular / WhatsApp</label>
+                    <input type="tel" id="celular" placeholder="(00) 00000-0000" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="paciente@email.com" required>
+                </div>
+            </div>
+
+            <button type="submit">Finalizar Cadastro</button>
+        </form>
+
+        <section class="lista-secao">
+            <h2>Pacientes Registrados</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Criado em</th>
+                            <th>Nome</th>
+                            <th>Celular</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaCorpo">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Lógica para cadastrar e exibir na tabela
+        document.getElementById('formCadastro').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Gerando ID e Data de forma automática
+            const idAleatorio = Math.floor(Math.random() * 9000) + 1000;
+            const dataHora = new Date().toLocaleString('pt-BR');
+
+            // Capturando valores dos campos
+            const nome = document.getElementById('nome').value;
+            const celular = document.getElementById('celular').value;
+            const email = document.getElementById('email').value;
+
+            // Criando a linha na tabela
+            const corpoTabela = document.getElementById('tabelaCorpo');
+            const novaLinha = corpoTabela.insertRow();
+
+            novaLinha.innerHTML = `
+                <td><strong>#${idAleatorio}</strong></td>
+                <td>${dataHora}</td>
+                <td>${nome}</td>
+                <td>${celular}</td>
+                <td>${email}</td>
+            `;
+
+            // Feedback visual
+            const msg = document.getElementById('mensagem');
+            msg.textContent = `Paciente ${nome} cadastrado com sucesso!`;
+            msg.classList.remove('hidden');
+
+            // Limpar formulário
+            this.reset();
+
+            // Esconder mensagem após 3 segundos
+            setTimeout(() => {
+                msg.classList.add('hidden');
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
+</body>
+</html>

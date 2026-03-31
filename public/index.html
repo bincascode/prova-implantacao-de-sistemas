@@ -215,8 +215,8 @@
             const corpoTabela = document.getElementById('tabelaCorpo');
             const novaLinha = corpoTabela.insertRow();
             novaLinha.innerHTML = `
-                <td>#${novoPaciente.id}</td>
-                <td>${new Date(novoPaciente.created_at).toLocaleString('pt-BR')}</td>
+                <td>#${novoPaciente.id}</td>    
+                <td>${new Date(novoPaciente.criado_em).toLocaleString('pt-BR')}</td>
                 <td>${novoPaciente.nome}</td>
                 <td>${novoPaciente.celular}</td>
                 <td>${novoPaciente.email}</td>

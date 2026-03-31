@@ -209,18 +209,18 @@
         });
 
         const novoPaciente = await response.json();
+console.log("Dados recebidos do servidor:", novoPaciente); // Use isso para ver o que está chegando!
 
-if (response.ok) {
+if (response.ok && novoPaciente) {
     const corpoTabela = document.getElementById('tabelaCorpo');
     const novaLinha = corpoTabela.insertRow();
     
-    // ATENÇÃO AOS NOMES: id, criado_em, nome, celular, email
     novaLinha.innerHTML = `
-        <td>#${novoPaciente.id}</td>
-        <td>${new Date(novoPaciente.criado_em).toLocaleString('pt-BR')}</td>
-        <td>${novoPaciente.nome}</td>
-        <td>${novoPaciente.celular}</td>
-        <td>${novoPaciente.email}</td>
+        <td>#${novoPaciente.id || 'N/A'}</td>
+        <td>${novoPaciente.criado_em ? new Date(novoPaciente.criado_em).toLocaleString('pt-BR') : '---'}</td>
+        <td>${novoPaciente.nome || 'Sem nome'}</td>
+        <td>${novoPaciente.celular || 'Sem celular'}</td>
+        <td>${novoPaciente.email || 'Sem email'}</td>
     `;
     this.reset();
 }

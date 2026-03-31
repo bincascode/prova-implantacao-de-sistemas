@@ -25,18 +25,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.post('/api/pacientes', async (req, res) => {
     const { nome, celular, email } = req.body;
 
-    // Enviamos apenas o que o formulário captura
     const { data, error } = await supabase
         .from('pacientes')
-        .insert([{ nome, celular, email }]) // Nomes devem ser minúsculos como no print
-        .select();
+        .insert([{ nome, celular, email }])
+        .select(); // <--- ESSA LINHA É OBRIGATÓRIA
 
-    if (error) {
-        console.error("Erro Supabase:", error.message);
-        return res.status(400).json(error);
-    }
-
-    res.status(201).json(data);
+    if (error) return res.status(400).json(error);
+    
+    // O Supabase devolve um array, então enviamos o primeiro item
+    res.status(201).json(data); 
 });
 
 

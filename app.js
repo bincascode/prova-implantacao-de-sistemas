@@ -8,7 +8,7 @@ app.use(express.static('public'));
 app.use(express.static(__dirname)); 
 const PORT = 4000;
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
 
 // Rota para salvar paciente
@@ -30,9 +30,11 @@ app.get('/', (req, res) => {
 });
 
 
-// app.listen(PORT, () => {
-//   console.log(`Servidor rodando em http://localhost:${PORT}`);
-// });
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = 3000;
+    app.listen(PORT, () => console.log(`Rodando local em http://localhost:${PORT}`));
+}
 
 module.exports = app;
+
 

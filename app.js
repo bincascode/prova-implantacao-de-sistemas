@@ -7,7 +7,6 @@ app.use(express.static('public'));
 const PORT = 4000;
 
 
-
 // Pegando as variáveis de ambiente
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
